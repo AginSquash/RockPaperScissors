@@ -90,11 +90,22 @@ struct ContentView: View {
                 }.padding()
                 
                 Spacer()
-                // Image ?
+                /* Image ?
                 Text("\(availableChose[appChoice])")
                     .textConfigurator()
                     .font(.largeTitle)
-                //
+                */
+                
+                ZStack {
+                    Circle()
+                    .frame(width: 207, height: 207, alignment: .center)
+                        .foregroundColor(.white)
+                        .shadow(radius: 10)
+                Image(availableChose[appChoice])
+                    .resizable()
+                    .frame(width: 200, height: 200, alignment: .center)
+                    .clipShape(Circle())
+                }
                 Spacer()
                 
                 HStack(spacing: 30) {
