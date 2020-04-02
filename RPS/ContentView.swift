@@ -46,18 +46,18 @@ struct ContentView: View {
     
     func movement(userChoice: Int)
     {
-        var factor = 0
+        var term = 0
         switch userChoice {
             case 0 where appChoice == 2:
-                factor = 1
+                term = 1
             case 1 where appChoice == 0:
-                factor = 1
+                term = 1
             case 2 where appChoice == 1:
-                factor = 1
+                term = 1
             default:
-                factor = -1
+                term = -1
         }
-        let multiplier = shouldWin ? 1 * factor : -1 * factor
+        let multiplier = shouldWin ? 1 * term : -1 * term
         self.score += multiplier
         
         if (multiplier > 0)
