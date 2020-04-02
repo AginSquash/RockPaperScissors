@@ -41,22 +41,33 @@ struct ContentView: View {
     @State var shouldWin = Bool.random()
     @State var score = 0
     
+    @State var endMove = false;
+    @State var endMoveTitle = ""
+    
     func movement(userChoice: Int)
     {
-        let multiplier = shouldWin ? 1 : -1
+        var factor = 0
         switch userChoice {
             case 0 where appChoice == 2:
-                self.score += multiplier
+                factor = 1
             case 1 where appChoice == 0:
-                self.score += multiplier
+                factor = 1
             case 2 where appChoice == 1:
-                self.score += multiplier
+                factor = 1
             default:
-                self.score -= multiplier
+                factor = -1
         }
+        let multiplier = shouldWin ? 1 * factor : -1 * factor
+        self.score += multiplier
+        
+        if (multiplier > 0)
+        {
+             self.endMoveTitle = "Correct"
+        } else {
+             self.endMoveTitle = "Wrong"
+        }
+        self.endMove = true
         print(userChoice)
-        self.appChoice = Int.random(in: 0...2)
-        self.shouldWin = Bool.random()
     }
     
     var body: some View {
@@ -97,6 +108,12 @@ struct ContentView: View {
                 }
                 Spacer()
             }
+        }
+        .alert(isPresented: $endMove) {
+            Alert(title: Text(self.endMoveTitle), message: Text("Your new score: \(score)"), dismissButton: .default(Text("Ok")) {
+                self.appChoice = Int.random(in: 0...2)
+                self.shouldWin = Bool.random()
+            })
         }
     }
 }
