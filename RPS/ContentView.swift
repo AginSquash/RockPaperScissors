@@ -126,7 +126,11 @@ struct ContentView: View {
         }
         .alert(isPresented: $endMove) {
             Alert(title: Text(self.endMoveTitle), message: Text("Your new score: \(score)"), dismissButton: .default(Text("Ok")) {
-                self.appChoice = Int.random(in: 0...2)
+                let oldChose = self.appChoice
+                while (self.appChoice == oldChose)
+                {
+                    self.appChoice = Int.random(in: 0...2)
+                }
                 self.shouldWin = Bool.random()
             })
         }
