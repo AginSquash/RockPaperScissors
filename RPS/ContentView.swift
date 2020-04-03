@@ -34,6 +34,22 @@ extension View {
     }
 }
 
+struct CircleImage: View {
+    var width: CGFloat
+    var image: Image
+    
+    var body: some View
+    {
+            image
+                .renderingMode(.original)
+                .resizable()
+                .frame(width: width, height: width, alignment: .center)
+                .clipShape(Circle())
+                .shadow(radius: 10)
+                .overlay(Capsule().stroke(Color.white, lineWidth: 3))
+    }
+}
+
 struct ContentView: View {
     let availableChose = ["Rock", "Paper", "Scissors"]
     
@@ -90,31 +106,19 @@ struct ContentView: View {
                 }.padding()
                 
                 Spacer()
-                /* Image ?
-                Text("\(availableChose[appChoice])")
-                    .textConfigurator()
-                    .font(.largeTitle)
-                */
                 
-                ZStack {
-                    Circle()
-                    .frame(width: 207, height: 207, alignment: .center)
-                        .foregroundColor(.white)
-                        .shadow(radius: 10)
-                Image(availableChose[appChoice])
-                    .resizable()
-                    .frame(width: 200, height: 200, alignment: .center)
-                    .clipShape(Circle())
-                }
+                CircleImage(width: 200, image: Image(availableChose[appChoice]) )
+                
                 Spacer()
                 
                 HStack(spacing: 30) {
-                    ForEach(0..<availableChose.count) { chose in
-                        Button(self.availableChose[chose])
+                    ForEach(0..<3) { chose in
+                        Button(action:
                         {
                             self.movement(userChoice: chose)
+                        }) {
+                            CircleImage(width: 100, image: Image(self.availableChose[chose]))
                         }
-                    .buttonConfigurator()
                     }
                 }
                 Spacer()
